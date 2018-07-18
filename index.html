@@ -5,10 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Search API</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
     crossorigin="anonymous">
-
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -19,12 +19,10 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto ">
         <li class="nav-item active">
-          <a class="nav-link" href="#giphy">Giphy
-            <span class="sr-only">(current)</span>
-          </a>
+          <a class="nav-link" href="#giphy">Giphy</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#movies">Movies</a>
@@ -38,25 +36,44 @@
 
   <div class="container">
     <section id="giphy">
-      <h1 style="text-align: center;">Giphy</h1>
+      <h1 style="text-align: center;">Search Giphy</h1>
+      <hr>
       <div class="row">
-        <div class="col-3">
-          <h3>Search parameters:</h3>
+        <div class="col-12">
           <form>
             <div class="form-group">
               <label for="topic">Topic:</label>
-              <input type="text" class="form-control" id="topic" placeholder="Enter topic to search">
+              <input type="text" id="topic" placeholder="Enter topic to search">
             </div>
             <div class="form-group">
               <label for="topic">Limit:</label>
-              <input type="text" class="form-control" id="limit" placeholder="Enter # of giphies to fetch!">
+              <input type="text" id="limit" placeholder="Enter # of giphies to fetch!">
             </div>
-            <button id="find-giphy" type="submit" class="btn btn-primary">Fetch!</button>
+            <div class="form-group">
+              <button id="find-giphy" type="submit" class="btn btn-primary">Fetch!</button>
+            </div>
           </form>
         </div>
-        <div class="col-9">
-          <div id="giphyButtons"></div>
-          <div id="giphyResults"></div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-12" id="giphyButtons"></div>
+      </div>
+      <div class="row">
+        <div class="col-12" id="giphyTable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Trending date</th>
+                <th scope="col">Image</th>
+                <th scope="col">Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Insert movie rows here -->
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -100,28 +117,149 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
     crossorigin="anonymous"></script>
   <script>
+    var giphyArray = ['toronto', 'soccer', 'nba', 'roses'];
+    var moviesArray = ['avatar', 'lion king', 'Her', '300'];
+    var bandsArray = ['Beetles', 'Drake', 'Taylor Swift', 'roses'];
+
+    // render buttons
+    renderButtons(giphyArray, "giphy")
+    console.log(giphyArray)
+
+    // clicking giphy fetch button
     $("#find-giphy").on("click", function (event) {
       event.preventDefault();
-
-      // extract form input values
-      var giphyTopic = $("#topic").val();
-      var giphyLimit = $("#limit").val();
-      console.log(giphyTopic);
-      console.log(giphyLimit);
-
-      // ajax call
-      var queryGiphy = `https://api.giphy.com/v1/gifs/search?api_key=RiOoaXfWH40EgxNi08rN7WLGTFffEMgN&q=${giphyTopic}&limit=${giphyLimit}&offset=0&rating=G&lang=en`
-
-      $.ajax({
-        url: queryGiphy,
-        method: "GET"
-      }).then(res => {
-        console.log(res)
-      }).catch(err => {
-        console.log(err)
-      });
+      var type = $(this)[0].id
+      // save inputs
+      var params = {
+        giphyTopic: $("#topic").val(),
+        giphyLimit: parseInt($("#limit").val())
+      }
+      console.log(params)
+      displayInfo(type, params)
 
     })
+    // clicking movies fetch button
+    $("#find-movie").on("click", function (event) {
+      event.preventDefault();
+      console.log($(this)[0].id)
+    })
+    // clicking bands fetch button
+    $("#find-band").on("click", function (event) {
+      event.preventDefault();
+      console.log($(this)[0].id)
+    })
+
+    // clicking on a giphy button
+    $(document).on("click", ".giphy-btn", function (event) {
+      console.log(event.target.textContent)
+      var params = {
+        giphyTopic: event.target.textContent,
+        giphyLimit: parseInt($("#limit").val())
+      }
+      console.log(params)
+      displayInfo("find-giphy", params)
+    });
+    // clicking on a giphy button
+    $(document).on("click", ".movie-btn", displayInfo);
+    // clicking on a giphy button
+    $(document).on("click", ".band-btn", displayInfo);
+
+    function displayInfo(type, params) {
+      if (type === "find-giphy") {
+        if (params.giphyTopic !== "" && !isNaN(params.giphyLimit)) {
+          giphyArray.push(params.giphyTopic)
+
+          // display buttons
+          renderButtons(giphyArray, "giphy")
+
+          // display table with metadata
+          var queryGiphy = `https://api.giphy.com/v1/gifs/search?api_key=RiOoaXfWH40EgxNi08rN7WLGTFffEMgN&q=${params.giphyTopic}&limit=${params.giphyLimit}&offset=0&rating=G&lang=en`
+
+          $.ajax({
+            url: queryGiphy,
+            method: "GET"
+          }).then(result => {
+            var cleanData = cleanAjax(result, "giphy")
+            console.log(cleanData)
+            makeTable(cleanData, "giphy")
+          }).catch(err => {
+            console.log(err)
+          });
+        } else {
+          if (isNaN(params.giphyLimit)) {
+            alert("Please put a number for the Limit")
+          } else {
+            alert("No results were found!")
+          }
+        }
+      } else if (type === "find-movie") {
+
+      } else if (type === "find-band") {
+
+      }
+    }
+
+    function renderButtons(arr, form) {
+      if (form === "giphy") {
+        $("#giphyButtons").empty();
+        for (let i = 0; i < arr.length; i++) {
+          var newButton = $("<button>")
+          newButton.text(arr[i])
+          newButton.addClass("btn")
+          newButton.addClass("btn-primary")
+          newButton.addClass("giphy-btn")
+          newButton.attr("data-name", arr[i]);
+          $("#giphyButtons").prepend(newButton)
+        }
+      } else if (form === "movies") {
+        console.log("hi")
+      } else if (form === "bands") {
+        console.log("hi")
+
+      }
+    }
+
+    function cleanAjax(result, form) {
+
+      if (form === "giphy") {
+        var url = [];
+        var title = [];
+        var rating = [];
+        var trending_datetime = [];
+        for (let i = 0; i < result.data.length; i++) {
+          url.push(result.data[i].images.fixed_height.url)
+          title.push(result.data[i].title)
+          rating.push(result.data[i].rating)
+          trending_datetime.push(result.data[i].trending_datetime)
+        }
+        return { title: title, trending_datetime: trending_datetime, url: url, rating: rating }
+      } else if (form === "movies") {
+        console.log("hi")
+      } else if (form === "bands") {
+        console.log("hi")
+      }
+    }
+
+    function makeTable(ajaxResult, form) {
+      console.log(ajaxResult)
+      console.log(form)
+      if (form === "giphy") {
+        for (let i = 0; i < ajaxResult.rating.length; i++) {
+          var tBody = $("tbody");
+          var tRow = $("<tr>");
+          var titleTd = $("<td>").text(ajaxResult.title[i]);
+          var dateTd = $("<td>").text(ajaxResult.trending_datetime[i]);
+          var imageTd = $("<td>").html(`<img class="img-thumbnail" src=${ajaxResult.url[i]}>`);
+          var ratingTd = $("<td>").text(ajaxResult.rating[i].toUpperCase())
+          tRow.append(titleTd, dateTd, imageTd, ratingTd);
+          tBody.prepend(tRow);
+        }
+      } else if (form === "movies") {
+        console.log("hi")
+      } else if (form === "bands") {
+        console.log("hi")
+      }
+    }
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
