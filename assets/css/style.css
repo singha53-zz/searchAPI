@@ -1,18 +1,37 @@
-form {
-  float: left;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-.form-group {
-  /* padding: 5%; */
-  margin: 0;
+h1 {
+  font-family: 'Monoton', cursive;
 }
 
-.btn {
+.form-group {
+  float: left;
+  display: flex;
+  margin: 0 25%;
+}
+
+.giphy-btn {
   margin: 1rem;
 }
 
 .thead {
   text-align: center;
+}
+
+.jumbotron {
+  padding-top: 4rem;
+  padding-bottom: 1rem;
+}
+
+#giphyButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1rem;
+}
+
+/* code from: https://mdbootstrap.com/content/bootstrap-table-scroll/ */
+.table-wrapper-scroll-y {
+  display: block;
+  max-height: 400px;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
