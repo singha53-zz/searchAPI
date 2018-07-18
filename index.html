@@ -200,6 +200,7 @@
     }
 
     function renderButtons(arr, form) {
+      arr = Array.from(new Set(arr))
       if (form === "giphy") {
         $("#giphyButtons").empty();
         for (let i = 0; i < arr.length; i++) {
