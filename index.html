@@ -309,7 +309,17 @@
 
     // clear table upon clicking the reset buttons
     $(document).on("click", ".reset", function (event) {
-      console.log(event)
+      var id = event.currentTarget.id
+      if (id === "reset-giphy") {
+        $("#giphyButtons").empty();
+        $("#giphy-tbody").empty();
+      } else if (id === "reset-movie") {
+        $("#movieButtons").empty();
+        $("#movie-tbody").empty();
+      } else {
+        $("#bandsButtons").empty();
+        $("#band-tbody").empty();
+      }
     })
 
     // display table
