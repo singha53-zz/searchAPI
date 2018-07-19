@@ -57,13 +57,6 @@
               <input type="text" id="topic" class="input-small" placeholder="Topic query"> &nbsp;&nbsp;
               <label class="control-label" for="limit">Limit:</label>
               <input type="text" id="limit" class="input-small" placeholder="Number of giphies"> &nbsp;&nbsp;
-              <label class="control-label" for="rating">Rating:</label>
-              <select id="rating" style="width: 100px;">
-                <option value="G">G</option>
-                <option value="PG">PG</option>
-                <option value="PG-13">PG-13</option>
-              </select>
-              &nbsp;&nbsp;
               <button id="find-giphy" type="button" class="btn-sm btn-primary">Search</button>
               <button id="reset-giphy" type="reset" class="btn-sm reset">Reset</button>
             </div>
@@ -239,8 +232,7 @@
       // save inputs
       var params = {
         giphyTopic: $("#topic").val(),
-        giphyLimit: parseInt($("#limit").val()),
-        giphyRating: $("#rating").val()
+        giphyLimit: parseInt($("#limit").val())
       }
 
       displayInfo(type, params)
@@ -280,8 +272,7 @@
 
       var params = {
         giphyTopic: event.target.textContent,
-        giphyLimit: parseInt($("#limit").val()),
-        giphyRating: $("#rating").val()
+        giphyLimit: parseInt($("#limit").val())
       }
 
       displayInfo("find-giphy", params)
@@ -313,12 +304,15 @@
       if (id === "reset-giphy") {
         $("#giphyButtons").empty();
         $("#giphy-tbody").empty();
+        renderButtons(['toronto', 'soccer', 'nba', 'roses'], "giphy")
       } else if (id === "reset-movie") {
         $("#movieButtons").empty();
         $("#movie-tbody").empty();
+        renderButtons(['avatar', 'lion king', 'Her', '300'], "movies")
       } else {
         $("#bandsButtons").empty();
         $("#band-tbody").empty();
+        renderButtons(['Cher', 'Drake', 'Taylor Swift', 'Chaos'], "bands")
       }
     })
 
@@ -332,7 +326,7 @@
           renderButtons(giphyArray, "giphy")
 
           // display table with metadata
-          var queryGiphy = `https://api.giphy.com/v1/gifs/search?api_key=RiOoaXfWH40EgxNi08rN7WLGTFffEMgN&q=${params.giphyTopic}&limit=${params.giphyLimit}&offset=0&rating=${params.giphyRating.toLowerCase()}&lang=en`
+          var queryGiphy = `https://api.giphy.com/v1/gifs/search?api_key=RiOoaXfWH40EgxNi08rN7WLGTFffEMgN&q=${params.giphyTopic}&limit=${params.giphyLimit}&lang=en`
 
           $.ajax({
             url: queryGiphy,
