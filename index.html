@@ -216,9 +216,14 @@
   <!-- <script src="assets/javascript/app.js"></script> -->
   <script>
     // default search buttons
-    var giphyArray = ['toronto', 'soccer', 'nba', 'roses'];
-    var moviesArray = ['avatar', 'lion king', 'Her', '300'];
-    var bandsArray = ['Cher', 'Drake', 'Taylor Swift', 'Chaos'];
+    var giphyArrayInit = ['toronto', 'soccer', 'nba', 'roses'];
+    var moviesArrayInit = ['avatar', 'lion king', 'Her', '300'];
+    var bandsArrayInit = ['Cher', 'Drake', 'Taylor Swift', 'Chaos'];
+    // modifyable arrays
+    var giphyArray = giphyArrayInit;
+    var moviesArray = moviesArrayInit;
+    var bandsArray = bandsArrayInit;
+
 
     // render buttons
     renderButtons(giphyArray, "giphy")
@@ -304,15 +309,15 @@
       if (id === "reset-giphy") {
         $("#giphyButtons").empty();
         $("#giphy-tbody").empty();
-        renderButtons(['toronto', 'soccer', 'nba', 'roses'], "giphy")
+        renderButtons(giphyArrayInit, "giphy")
       } else if (id === "reset-movie") {
         $("#movieButtons").empty();
         $("#movie-tbody").empty();
-        renderButtons(['avatar', 'lion king', 'Her', '300'], "movies")
+        renderButtons(moviesArrayInit, "movies")
       } else {
         $("#bandsButtons").empty();
         $("#band-tbody").empty();
-        renderButtons(['Cher', 'Drake', 'Taylor Swift', 'Chaos'], "bands")
+        renderButtons(bandsArrayInit, "bands")
       }
     })
 
