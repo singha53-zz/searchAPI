@@ -1,19 +1,19 @@
 .bg-primary {
-  background-color: #007CAD!important;
+  background-color: #007cad !important;
 }
 
 h1 {
   font-family: 'Monoton', cursive;
 }
 
+.btn {
+  margin: 1rem;
+}
+
 .form-group {
   float: left;
   display: flex;
   margin: 0 25%;
-}
-
-.giphy-btn {
-  margin: 1rem;
 }
 
 .thead {
@@ -25,7 +25,8 @@ h1 {
   padding-bottom: 1rem;
 }
 
-#giphyButtons {
+#giphyButtons,
+#movieButtons {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

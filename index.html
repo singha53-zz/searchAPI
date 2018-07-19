@@ -46,26 +46,26 @@
         <h1 style="text-align: center;">Giphy</h1>
       </div>
       <hr>
-        <form>
-          <div class="row justify-content-center">
-            <div class="col-md-4 form-input">
-              <div class="form-group">
-                <label for="topic">Topic:</label>
-                <input type="text" id="topic" placeholder="Enter topic to search">
-              </div>
+      <div class="row">
+        <div class="col-12" style="display: flex; justify-content: center">
+          <form class="well form-search" id="search-by-id-form" onsubmit="return false;">
+            <div>
+              <label class="control-label" for="topic">Topic:</label>
+              <input type="text" id="topic" class="input-small" placeholder="Topic query"> &nbsp;&nbsp;
+              <label class="control-label" for="limit">Limit:</label>
+              <input type="text" id="limit" class="input-small" placeholder="Number of giphies"> &nbsp;&nbsp;
+              <label class="control-label" for="rating">Rating:</label>
+              <select id="rating" style="width: 100px;">
+                <option value="G">G</option>
+                <option value="PG">PG</option>
+                <option value="PG-13">PG-13</option>
+              </select>
+              &nbsp;&nbsp;
+              <button id="find-giphy" type="button" class="btn-sm btn-primary">Search</button>
+              <button id="reset-giphy" type="reset" class="btn-sm">Reset</button>
             </div>
-            <div class="col-md-4 form-input">
-              <div class="form-group">
-                <label for="topic">Limit:</label>
-                <input type="text" id="limit" placeholder="Enter # of giphies">
-              </div>
-            </div>
-            <div class="col-md-4 form-input">
-              <div class="form-group">
-                <button id="find-giphy" type="submit" class="btn btn-primary">Fetch!</button>
-              </div>
-            </div>
-        </form>
+          </form>
+        </div>
       </div>
       <hr>
       <div class="row">
@@ -83,7 +83,7 @@
                   <th scope="col">Rating</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="giphy-tbody">
                 <!-- Insert movie rows here -->
               </tbody>
             </table>
@@ -95,16 +95,60 @@
     <hr>
 
     <section id="movies">
-      <h1>Movies</h1>
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores in explicabo necessitatibus eaque, minus exercitationem
-        maxime sapiente nihil voluptatibus voluptatum ea quae aperiam ut suscipit. Illo blanditiis itaque maiores aliquam!
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, quaerat id? Non hic natus vero ipsum laudantium
-        reiciendis odit facere corrupti atque, fugit sint assumenda, quis, dolore quam quo quisquam ullam ab eaque molestiae
-        officia! Quaerat quisquam amet dignissimos numquam temporibus quasi quibusdam vitae dolores atque animi illum nihil
-        eveniet porro dolor, veniam et officiis consequuntur earum, repudiandae, maiores aliquid voluptatum enim rerum? Saepe
-        doloribus quos delectus molestias, nesciunt impedit quam aliquid tempora est atque odit debitis esse consequatur
-        temporibus provident minima eum cum? Maiores rerum fuga minus quae reiciendis corporis facilis odio perspiciatis,
-        ullam quas accusantium est labore dolores.</p>
+      <div class="jumbotron">
+        <h1 style="text-align: center;">OMDB</h1>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-12" style="display: flex; justify-content: center">
+          <form class="well form-search" id="search-by-id-form" onsubmit="return false;">
+            <div>
+              <label class="control-label" for="i">Title:</label>
+              <input type="text" id="i" name="i" class="input-small" placeholder="Movie title"> &nbsp;&nbsp;
+              <label class="control-label">Plot:</label>
+              <select name="plot" style="width: 100px;">
+                <option value="" selected="">Short</option>
+                <option value="full">Full</option>
+              </select>
+              &nbsp;&nbsp;
+              <label class="control-label">Type:</label>
+              <select name="r" style="width: 100px;">
+                <option value="">movie</option>
+                <option value="xml">series</option>
+                <option value="xml">episode</option>
+              </select>
+              &nbsp;&nbsp;
+              <button id="find-movie" type="button" class="btn-sm btn-primary">Search</button>
+              <button id="reset-movie" type="reset" class="btn-sm">Reset</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <hr>
+      <div class="row">
+        <div class="col-12" id="movieButtons"></div>
+      </div>
+      <div class="row">
+        <div class="col-12" id="movieTable">
+          <div class="table-wrapper-scroll-y">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Year</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Rating</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Insert movie rows here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </section>
 
     <hr>
@@ -120,6 +164,49 @@
         doloribus quos delectus molestias, nesciunt impedit quam aliquid tempora est atque odit debitis esse consequatur
         temporibus provident minima eum cum? Maiores rerum fuga minus quae reiciendis corporis facilis odio perspiciatis,
         ullam quas accusantium est labore dolores.</p>
+    </section>
+
+    <section>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="bs-component">
+            <form class="well form-search" id="search-by-id-form" onsubmit="return false;">
+              <div>
+                <label class="control-label" for="i">Title:</label>
+                <input type="text" id="i" name="i" class="input-small" placeholder="Movie title"> &nbsp;&nbsp;
+                <label class="control-label">Plot:</label>
+                <select name="plot" style="width: 100px;">
+                  <option value="" selected="">Short</option>
+                  <option value="full">Full</option>
+                </select>
+                &nbsp;&nbsp;
+                <label class="control-label">Type:</label>
+                <select name="r" style="width: 100px;">
+                  <option value="">movie</option>
+                  <option value="xml">series</option>
+                  <option value="xml">episode</option>
+                </select>
+                &nbsp;&nbsp;
+                <button id="search-by-id-button" type="button" class="btn-sm btn-primary">Search</button>
+                <button id="search-by-id-reset" type="reset" class="btn-sm">Reset</button>
+              </div>
+              <div class="hide" id="search-by-id-request">
+                <br />
+                <p>Request:</p>
+                <pre class="alert alert-box"><a href="javascript:;" target="_blank"></a></pre>
+              </div>
+              <div id="search-by-id-progress" class="hide progress progress-info progress-striped active">
+                <div class="progress-bar" style="width: 100%;">
+                </div>
+              </div>
+              <div class="hide" id="search-by-id-response">
+                <p>Response:</p>
+                <pre class="alert alert-success" style="margin-bottom: 0px; white-space: normal;"></pre>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 
@@ -140,6 +227,7 @@
 
     // render buttons
     renderButtons(giphyArray, "giphy")
+    renderButtons(moviesArray, "movies")
     console.log(giphyArray)
 
     // clicking giphy fetch button
@@ -149,7 +237,8 @@
       // save inputs
       var params = {
         giphyTopic: $("#topic").val(),
-        giphyLimit: parseInt($("#limit").val())
+        giphyLimit: parseInt($("#limit").val()),
+        giphyRating: $("#rating").val()
       }
       console.log(params)
       displayInfo(type, params)
@@ -158,7 +247,14 @@
     // clicking movies fetch button
     $("#find-movie").on("click", function (event) {
       event.preventDefault();
-      console.log($(this)[0].id)
+      var type = $(this)[0].id
+      // save inputs
+      var params = {
+        movieTitle: $("#movie-title").val(),
+        movieYear: parseInt($("#movie-year").val())
+      }
+      console.log(params)
+      displayInfo(type, params)
     })
     // clicking bands fetch button
     $("#find-band").on("click", function (event) {
@@ -171,14 +267,15 @@
       console.log(event.target.textContent)
       var params = {
         giphyTopic: event.target.textContent,
-        giphyLimit: parseInt($("#limit").val())
+        giphyLimit: parseInt($("#limit").val()),
+        giphyRating: $("#rating").val()
       }
       console.log(params)
       displayInfo("find-giphy", params)
     });
-    // clicking on a giphy button
+    // clicking on a movie button
     $(document).on("click", ".movie-btn", displayInfo);
-    // clicking on a giphy button
+    // clicking on a band button
     $(document).on("click", ".band-btn", displayInfo);
 
     function displayInfo(type, params) {
@@ -190,7 +287,7 @@
           renderButtons(giphyArray, "giphy")
 
           // display table with metadata
-          var queryGiphy = `https://api.giphy.com/v1/gifs/search?api_key=RiOoaXfWH40EgxNi08rN7WLGTFffEMgN&q=${params.giphyTopic}&limit=${params.giphyLimit}&offset=0&rating=G&lang=en`
+          var queryGiphy = `https://api.giphy.com/v1/gifs/search?api_key=RiOoaXfWH40EgxNi08rN7WLGTFffEMgN&q=${params.giphyTopic}&limit=${params.giphyLimit}&offset=0&rating=${params.giphyRating.toLowerCase()}&lang=en`
 
           $.ajax({
             url: queryGiphy,
@@ -210,7 +307,33 @@
           }
         }
       } else if (type === "find-movie") {
+        if (params.movieTitle !== "" && !isNaN(params.movieYear)) {
+          moviesArray.push(params.movieTitle)
 
+          // display buttons
+          renderButtons(moviesArray, "movies")
+
+          // display table with metadata
+          var queryMovie = `https://www.omdbapi.com/?t=${params.movieTitle}&y=${params.movieYear}&plot=short&apikey=trilogy`;
+
+          $.ajax({
+            url: queryMovie,
+            method: "GET"
+          }).then(result => {
+            console.log(result)
+            var cleanData = cleanAjax(result, "movies")
+            console.log(cleanData)
+            makeTable(cleanData, "movies")
+          }).catch(err => {
+            console.log(err)
+          });
+        } else {
+          if (isNaN(params.giphyLimit)) {
+            alert("Please put a number for the Limit")
+          } else {
+            alert("No results were found!")
+          }
+        }
       } else if (type === "find-band") {
 
       }
@@ -230,7 +353,16 @@
           $("#giphyButtons").prepend(newButton)
         }
       } else if (form === "movies") {
-        console.log("hi")
+        $("#movieButtons").empty();
+        for (let i = 0; i < arr.length; i++) {
+          var newButton = $("<button>")
+          newButton.text(arr[i])
+          newButton.addClass("btn")
+          newButton.addClass("btn-info")
+          newButton.addClass("movie-btn")
+          newButton.attr("data-name", arr[i]);
+          $("#movieButtons").prepend(newButton)
+        }
       } else if (form === "bands") {
         console.log("hi")
 
@@ -252,9 +384,9 @@
         }
         return { title: title, trending_datetime: trending_datetime, url: url, rating: rating }
       } else if (form === "movies") {
-        console.log("hi")
+        console.log(result)
       } else if (form === "bands") {
-        console.log("hi")
+        console.log(result)
       }
     }
 
@@ -263,7 +395,7 @@
       console.log(form)
       if (form === "giphy") {
         for (let i = 0; i < ajaxResult.rating.length; i++) {
-          var tBody = $("tbody");
+          var tBody = $("#giphy-tbody");
           var tRow = $("<tr>");
           var titleTd = $("<td>").text(ajaxResult.title[i]);
           var dateTd = $("<td>").text(ajaxResult.trending_datetime[i]);
