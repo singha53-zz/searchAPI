@@ -26,7 +26,8 @@ h1 {
 }
 
 #giphyButtons,
-#movieButtons {
+#movieButtons,
+#bandsButtons {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

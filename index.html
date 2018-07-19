@@ -18,6 +18,8 @@
 </head>
 
 <body>
+
+  <!-- Navigation bar -->
   <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
     <a class="navbar-brand" href="#">Search API</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -40,6 +42,7 @@
     </div>
   </nav>
 
+  <!-- Giphy search API -->
   <div class="container">
     <section id="giphy">
       <div class="jumbotron">
@@ -62,7 +65,7 @@
               </select>
               &nbsp;&nbsp;
               <button id="find-giphy" type="button" class="btn-sm btn-primary">Search</button>
-              <button id="reset-giphy" type="reset" class="btn-sm">Reset</button>
+              <button id="reset-giphy" type="reset" class="btn-sm reset">Reset</button>
             </div>
           </form>
         </div>
@@ -94,6 +97,7 @@
 
     <hr>
 
+    <!-- OMDB movie search API -->
     <section id="movies">
       <div class="jumbotron">
         <h1 style="text-align: center;">OMDB</h1>
@@ -119,7 +123,7 @@
               </select>
               &nbsp;&nbsp;
               <button id="find-movie" type="button" class="btn-sm btn-primary">Search</button>
-              <button id="reset-movie" type="reset" class="btn-sm">Reset</button>
+              <button id="reset-movie" type="reset" class="btn-sm reset">Reset</button>
             </div>
           </form>
         </div>
@@ -153,18 +157,58 @@
 
     <hr>
 
+    <!-- Bands in Town API -->
     <section id="bands">
-      <h1>Bands</h1>
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores in explicabo necessitatibus eaque, minus exercitationem
-        maxime sapiente nihil voluptatibus voluptatum ea quae aperiam ut suscipit. Illo blanditiis itaque maiores aliquam!
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, quaerat id? Non hic natus vero ipsum laudantium
-        reiciendis odit facere corrupti atque, fugit sint assumenda, quis, dolore quam quo quisquam ullam ab eaque molestiae
-        officia! Quaerat quisquam amet dignissimos numquam temporibus quasi quibusdam vitae dolores atque animi illum nihil
-        eveniet porro dolor, veniam et officiis consequuntur earum, repudiandae, maiores aliquid voluptatum enim rerum? Saepe
-        doloribus quos delectus molestias, nesciunt impedit quam aliquid tempora est atque odit debitis esse consequatur
-        temporibus provident minima eum cum? Maiores rerum fuga minus quae reiciendis corporis facilis odio perspiciatis,
-        ullam quas accusantium est labore dolores.</p>
+      <div class="jumbotron">
+        <h1 style="text-align: center;">Bands &nbsp&nbsp in &nbsp&nbsp Town</h1>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-12" style="display: flex; justify-content: center">
+          <form class="well form-search" id="search-by-id-form" onsubmit="return false;">
+            <div>
+              <label class="control-label" for="band-name">Name:</label>
+              <input type="text" id="band-name" class="input-small" placeholder="Artist name"> &nbsp;&nbsp;
+              <label class="control-label" for="band-venue">Venue Location:</label>
+              <select id="band-venue" style="width: 100px;">
+                <option value="United States" selected="">USA</option>
+                <option value="Canada">Canada</option>
+                <option value="full">Other</option>
+              </select>
+              &nbsp;&nbsp;
+              <button id="find-band" type="button" class="btn-sm btn-primary">Search</button>
+              <button id="reset-band" type="reset" class="btn-sm reset">Reset</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <hr>
+      <div class="row">
+        <div class="col-12" id="bandsButtons"></div>
+      </div>
+      <div class="row">
+        <div class="col-12" id="bandTable">
+          <div class="table-wrapper-scroll-y">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Artist(s)</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Venue</th>
+                  <th scope="col">Tickets</th>
+                </tr>
+              </thead>
+              <tbody id="band-tbody">
+                <!-- Insert band rows here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </section>
+    <br>
   </div>
 
   <!-- jQuery CDN -->
@@ -178,14 +222,15 @@
   <!-- App javascript script -->
   <!-- <script src="assets/javascript/app.js"></script> -->
   <script>
+    // default search buttons
     var giphyArray = ['toronto', 'soccer', 'nba', 'roses'];
     var moviesArray = ['avatar', 'lion king', 'Her', '300'];
-    var bandsArray = ['Beetles', 'Drake', 'Taylor Swift', 'roses'];
+    var bandsArray = ['Cher', 'Drake', 'Taylor Swift', 'Chaos'];
 
     // render buttons
     renderButtons(giphyArray, "giphy")
     renderButtons(moviesArray, "movies")
-    console.log(giphyArray)
+    renderButtons(bandsArray, "bands")
 
     // clicking giphy fetch button
     $("#find-giphy").on("click", function (event) {
@@ -197,7 +242,7 @@
         giphyLimit: parseInt($("#limit").val()),
         giphyRating: $("#rating").val()
       }
-      console.log(params)
+
       displayInfo(type, params)
 
     })
@@ -205,47 +250,69 @@
     $("#find-movie").on("click", function (event) {
       event.preventDefault();
       var type = $(this)[0].id
-      console.log(type)
+
       // save inputs
       var params = {
         movieTitle: $("#movie-title").val(),
         moviePlot: $("#movie-plot").val(),
         movieType: $("#movie-type").val()
       }
-      console.log(params)
+
       displayInfo(type, params)
     })
     // clicking bands fetch button
     $("#find-band").on("click", function (event) {
       event.preventDefault();
-      console.log($(this)[0].id)
+      event.preventDefault();
+      var type = $(this)[0].id
+
+      // save inputs
+      var params = {
+        bandTitle: $("#band-name").val(),
+        bandVenue: $("#band-venue").val()
+      }
+
+      displayInfo(type, params)
     })
 
     // clicking on a giphy button
     $(document).on("click", ".giphy-btn", function (event) {
-      console.log(event.target.textContent)
+
       var params = {
         giphyTopic: event.target.textContent,
         giphyLimit: parseInt($("#limit").val()),
         giphyRating: $("#rating").val()
       }
-      console.log(params)
+
       displayInfo("find-giphy", params)
     });
     // clicking on a movie button
     $(document).on("click", ".movie-btn", function (event) {
-      console.log(event.target.textContent)
+
       var params = {
         movieTitle: event.target.textContent,
         moviePlot: $("#movie-plot").val().toLowerCase(),
         movieType: $("#movie-type").val()
       }
-      console.log(params)
+
       displayInfo("find-movie", params)
     });
     // clicking on a band button
-    $(document).on("click", ".band-btn", displayInfo);
+    $(document).on("click", ".band-btn", function (event) {
+      var params = {
+        bandTitle: event.target.textContent,
+        bandVenue: $("#band-venue").val()
+      }
 
+      displayInfo("find-band", params)
+    });
+
+    // clear table upon clicking the reset buttons
+    $(document).on("click", ".reset", function (event) {
+      console.log(event)
+    })
+
+    // display table
     function displayInfo(type, params) {
       if (type === "find-giphy") {
         if (params.giphyTopic !== "" && !isNaN(params.giphyLimit)) {
@@ -262,13 +329,12 @@
             method: "GET"
           }).then(result => {
             var cleanData = cleanAjax(result, "giphy")
-            console.log(cleanData)
             makeTable(cleanData, "giphy")
           }).catch(err => {
             console.log(err)
           });
         } else if (isNaN(params.giphyLimit)) {
-            alert("Please put a number for the Limit")
+          alert("Please put a number for the Limit")
         }
       } else if (type === "find-movie") {
         if (params.movieTitle !== "" && params.moviePlot !== "" && params.movieType !== "") {
@@ -284,18 +350,55 @@
             url: queryMovie,
             method: "GET"
           }).then(result => {
-            console.log(result)
+
             var cleanData = cleanAjax(result, "movies")
-            if(cleanData.title === undefined){
+            if (cleanData.title === undefined) {
               return alert("No results were found!")
             } else {
               makeTable(cleanData, "movies")
             }
           }).catch(err => {
+            console.log(err)
           });
         }
       } else if (type === "find-band") {
+        if (params.bandTitle !== "") {
+          bandsArray.push(params.bandTitle)
 
+          // display buttons
+          renderButtons(bandsArray, "bands")
+
+          // display table with metadata
+
+          var queryVenue = `https://rest.bandsintown.com/artists/${params.bandTitle}/events?app_id=codingbootcamp`;
+
+          $.ajax({
+            url: queryVenue,
+            method: "GET"
+          }).then(result => {
+
+            // if venue location is other
+            if ((params.bandVenue === "United States") || (params.bandVenue === "Canada")) {
+              var filteredResult = result.filter(country => {
+                return country.venue.country === params.bandVenue
+              })
+            } else {
+              var filteredResult = result.filter(country => {
+                return country.venue.country !== 'United States' && country.venue.country !== 'Canada'
+              })
+            }
+
+            if (filteredResult.length === 0) {
+              alert("No results were found!")
+            } else {
+              var cleanData = cleanAjax(filteredResult, "bands")
+              makeTable(cleanData, "bands")
+            }
+          }).catch(err => {
+            console.log(err)
+            alert("No results were found!")
+          });
+        }
       }
     }
 
@@ -324,8 +427,16 @@
           $("#movieButtons").prepend(newButton)
         }
       } else if (form === "bands") {
-        console.log("hi")
-
+        $("#bandsButtons").empty();
+        for (let i = 0; i < arr.length; i++) {
+          var newButton = $("<button>")
+          newButton.text(arr[i])
+          newButton.addClass("btn")
+          newButton.addClass("btn-info")
+          newButton.addClass("band-btn")
+          newButton.attr("data-name", arr[i]);
+          $("#bandsButtons").prepend(newButton)
+        }
       }
     }
 
@@ -344,19 +455,27 @@
         }
         return { title: title, trending_datetime: trending_datetime, url: url, rating: rating }
       } else if (form === "movies") {
-        title = result.Title;
-        year = result.Year;
-        url = result.Poster;
-        plot = result.Plot;
+        var title = result.Title;
+        var year = result.Year;
+        var url = result.Poster;
+        var plot = result.Plot;
         return { title: title, year: year, url: url, plot: plot }
       } else if (form === "bands") {
-        console.log(result)
+        var artist = [];
+        var date = [];
+        var venue = [];
+        var tickets = [];
+        for (let i = 0; i < result.length; i++) {
+          artist.push(result[i].lineup[0])
+          date.push(result[i].datetime)
+          venue.push(`${result[i].venue.name}, ${result[i].venue.city}, ${result[i].venue.country}`)
+          tickets.push(result[i].url)
+        }
+        return { artist: artist, date: date, venue: venue, tickets: tickets }
       }
     }
 
     function makeTable(ajaxResult, form) {
-      console.log(ajaxResult)
-      console.log(form)
       if (form === "giphy") {
         for (let i = 0; i < ajaxResult.rating.length; i++) {
           var tBody = $("#giphy-tbody");
@@ -370,22 +489,30 @@
         }
       } else if (form === "movies") {
         var tBody = $("#movie-tbody");
-          var tRow = $("<tr>");
-          var titleTd = $("<td>").text(ajaxResult.title);
-          var yearTd = $("<td>").text(ajaxResult.year);
-          var imageTd = $("<td>").html(`<img class="img-thumbnail gif" src=${ajaxResult.url}>`);
-          var plotTd = $("<td>").text(ajaxResult.plot)
-          tRow.append(titleTd, yearTd, imageTd, plotTd);
-          tBody.prepend(tRow);
+        var tRow = $("<tr>");
+        var titleTd = $("<td>").text(ajaxResult.title);
+        var yearTd = $("<td>").text(ajaxResult.year);
+        var imageTd = $("<td>").html(`<img class="img-thumbnail gif" src=${ajaxResult.url}>`);
+        var plotTd = $("<td>").text(ajaxResult.plot)
+        tRow.append(titleTd, yearTd, imageTd, plotTd);
+        tBody.prepend(tRow);
       } else if (form === "bands") {
-        console.log("hi")
+        for (let i = 0; i < ajaxResult.artist.length; i++) {
+          var tBody = $("#band-tbody");
+          var tRow = $("<tr>");
+          var artistTd = $("<td>").text(ajaxResult.artist[i]);
+          var dateTd = $("<td>").text(ajaxResult.date[i])
+          var venueTd = $("<td>").text(ajaxResult.venue[i])
+          var ticketsTd = $("<td>").html(`<a href=${ajaxResult.tickets[i]} target="_blank"><button class="btn btn-info">Get tickets!</button></a>`)
+          tRow.append(artistTd, dateTd, venueTd, ticketsTd);
+          tBody.prepend(tRow);
+        }
       }
     }
 
     // add play and pause functionality to gifs
     $(document).on("click", ".gif", function () {
       // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-      console.log("button clicked!")
       var state = $(this).attr("data-state");
       // If the clicked image's state is still, update its src attribute to what its data-animate value is.
       // Then, set the image's data-state to animate
