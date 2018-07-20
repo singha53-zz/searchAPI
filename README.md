@@ -21,7 +21,7 @@ cd searchAPI/
 
 ## Features
 
-- performs three different API calls (https://api.giphy.com, https://www.omdbapi.com, and https://rest.bandsintown.com)
+- performs three different API (GIPHY: https://api.giphy.com, OMDB: https://www.omdbapi.com, and Bandsintown: https://app.swaggerhub.com/apis/Bandsintown/PublicAPI/3.0.0)
 - additional search parameters are provided for each search API
 - results provided in scrollable tables
 
