@@ -4,7 +4,7 @@ A simple application that allows users to search for giphies, movies and bands (
 
 ## Installing / Getting started
 
-Simply head [here](http://amritsingh.ca/searchAPI/) to to start playing!
+Simply click [here](http://amritsingh.ca/searchAPI/) to to begin searching!
 
 ## Developing
 
