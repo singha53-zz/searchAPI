@@ -92,6 +92,7 @@ $(document).ready(function() {
   // clear table upon clicking the reset buttons
   $(document).on('click', '.reset', function(event) {
     var id = event.currentTarget.id;
+    
     if (id === 'reset-giphy') {
       $('#giphyButtons').empty();
       $('#giphy-tbody').empty();
