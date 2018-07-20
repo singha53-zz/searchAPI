@@ -2,18 +2,6 @@
 
 A simple application that allows users to search for giphies, movies and bands (musicians). 
 
-## Screenshots
-
-<div> <h3>Main Page</h3>
-<img align="left" src = "assets/Images/mainPage.png" width=300px, height=200px>
-</div>
-<div> <h3>Sample Question</h3>
-<img align="left" src = "assets/Images/sampleQuestion.png" width=300px, height=200px>
-</div>
-<div> <h3>Summary Page</h3>
-<img src = "assets/Images/summary.png" width=300px, height=200px>
-</div>
-
 ## Installing / Getting started
 
 Simply head [here](http://amritsingh.ca/searchAPI/) to to start playing!
@@ -24,16 +12,16 @@ Feel free to modify/expand upon my code for your purposes!
 
 ```shell
 git clone https://github.com/singha53/searchAPI.git
-cd TriviaGame/
+cd searchAPI/
 ```
 
 ## Scripting/Programming Languages
 
-- HTML, CSS (including Bootstrap), JavaScript (and making API calls using jQuery)
+- HTML, CSS (including Bootstrap), JavaScript (API calls using jQuery)
 
 ## Features
 
-- performs three different API calls (https://api.giphy.com, www.omdbapi.com, and https://rest.bandsintown.com)
+- performs three different API calls (https://api.giphy.com, https://www.omdbapi.com, and https://rest.bandsintown.com)
 - additional search parameters are provided for each search API
 - results provided in scrollable tables
 
