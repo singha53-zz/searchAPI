@@ -4,13 +4,9 @@ $(document).ready(function() {
   });
 
   // default search buttons
-  var giphyArrayInit = ['toronto', 'soccer', 'nba', 'roses'];
-  var moviesArrayInit = ['avatar', 'lion king', 'Her', '300'];
-  var bandsArrayInit = ['Cher', 'Drake', 'Taylor Swift', 'Chaos'];
-  // modifyable arrays
-  var giphyArray = giphyArrayInit;
-  var moviesArray = moviesArrayInit;
-  var bandsArray = bandsArrayInit;
+  var giphyArray = ['toronto', 'soccer', 'nba', 'roses'];
+  var moviesArray = ['avatar', 'lion king', 'Her', '300'];
+  var bandsArray = ['Cher', 'Drake', 'Taylor Swift', 'Chaos'];
 
   // render buttons
   renderButtons(giphyArray, 'giphy');
@@ -96,15 +92,15 @@ $(document).ready(function() {
     if (id === 'reset-giphy') {
       $('#giphyButtons').empty();
       $('#giphy-tbody').empty();
-      renderButtons(giphyArrayInit, 'giphy');
+      renderButtons(['toronto', 'soccer', 'nba', 'roses'], 'giphy');
     } else if (id === 'reset-movie') {
       $('#movieButtons').empty();
       $('#movie-tbody').empty();
-      renderButtons(moviesArrayInit, 'movies');
+      renderButtons(['avatar', 'lion king', 'Her', '300'], 'movies');
     } else {
       $('#bandsButtons').empty();
       $('#band-tbody').empty();
-      renderButtons(bandsArrayInit, 'bands');
+      renderButtons(['Cher', 'Drake', 'Taylor Swift', 'Chaos'], 'bands');
     }
   });
 
